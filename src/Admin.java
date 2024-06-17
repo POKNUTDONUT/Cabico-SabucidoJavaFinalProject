@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 public class Admin {
@@ -114,32 +112,36 @@ public class Admin {
 
         JButton viewBorrowedBooksButton = new JButton("View Borrowed Books");
         viewBorrowedBooksButton.setPreferredSize(new Dimension(150, 50));
-        viewBorrowedBooksButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                viewBorrowedBooks();
-            }
-        });
+        viewBorrowedBooksButton.addActionListener(e -> viewBorrowedBooks());
 
         JButton viewAllBooksButton = new JButton("View All Books");
         viewAllBooksButton.setPreferredSize(new Dimension(150, 50));
-        viewAllBooksButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                viewAllBooks();
-            }
-        });
+        viewAllBooksButton.addActionListener(e -> viewAllBooks());
 
         JButton backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(150, 50));
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-                mainMenuCallback.accept(library); // Call the main menu method
-            }
+        backButton.addActionListener(e -> {
+            dialog.dispose();
+            mainMenuCallback.accept(library); // Call the main menu method
         });
 
+        setButtons(panel, gbc, addBookButton, removeBookButton, viewBorrowedBooksButton, viewAllBooksButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the back button
+        panel.add(backButton, gbc);
+
+        dialog.add(panel);
+        dialog.setSize(600, 500); // Set desired size
+        dialog.setLocationRelativeTo(null); // Center the dialog
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setModal(true);
+        dialog.setVisible(true);
+    }
+
+    static void setButtons(BackgroundPanel panel, GridBagConstraints gbc, JButton addBookButton, JButton removeBookButton, JButton viewBorrowedBooksButton, JButton viewAllBooksButton) {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -156,19 +158,6 @@ public class Admin {
         gbc.gridx = 1;
         gbc.gridy = 3;
         panel.add(viewAllBooksButton, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER; // Center the back button
-        panel.add(backButton, gbc);
-
-        dialog.add(panel);
-        dialog.setSize(600, 500); // Set desired size
-        dialog.setLocationRelativeTo(null); // Center the dialog
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setModal(true);
-        dialog.setVisible(true);
     }
 
     private void addBook() {
@@ -210,6 +199,10 @@ public class Admin {
         JDialog allBooksDialog = new JDialog();
         allBooksDialog.setTitle("All Books");
 
+        setBookList(allBooksDialog, library);
+    }
+
+    static void setBookList(JDialog allBooksDialog, Library library) {
         JList<String> bookList = library.getBookList();
         JScrollPane scrollPane = new JScrollPane(bookList);
 

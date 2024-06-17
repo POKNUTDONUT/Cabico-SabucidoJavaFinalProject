@@ -70,22 +70,7 @@ public class Borrower {
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 1;
-        panel.add(borrowBookButton, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        panel.add(returnBookButton, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        panel.add(searchBookButton, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        panel.add(backButton, gbc);
+        Admin.setButtons(panel, gbc, borrowBookButton, returnBookButton, searchBookButton, backButton);
 
         dialog.add(panel);
         dialog.setSize(500, 400);
@@ -128,14 +113,7 @@ public class Borrower {
         JDialog allBooksDialog = new JDialog();
         allBooksDialog.setTitle("Books Available");
 
-        JList<String> bookList = library.getBookList();
-        JScrollPane scrollPane = new JScrollPane(bookList);
-
-        allBooksDialog.add(scrollPane);
-        allBooksDialog.setSize(400, 300);
-        allBooksDialog.setLocationRelativeTo(null);
-        allBooksDialog.setModal(true);
-        allBooksDialog.setVisible(true);
+        Admin.setBookList(allBooksDialog, library);
     }
 }
 
