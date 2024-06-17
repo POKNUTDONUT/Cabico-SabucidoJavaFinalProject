@@ -1,11 +1,13 @@
 import java.io.*;
 import java.util.*;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Library {
     private final List<Book> books;
     private final List<Book> borrowedBooks;
     private static final String BOOKS_FILE = "books.txt";
+    private static final Logger logger = Logger.getLogger(Library.class.getName());
 
     public Library() {
         books = new ArrayList<>();
@@ -69,12 +71,17 @@ public class Library {
         } catch (FileNotFoundException e) {
             // File not found, creating a new file
             try {
-                new File(BOOKS_FILE).createNewFile();
+               boolean fileCreated = new File(BOOKS_FILE).createNewFile();
+               if (!fileCreated) {
+                   JOptionPane.showMessageDialog(null, "Could not create book file");
+               }
             } catch (IOException ex) {
-                ex.printStackTrace();
+                logger.severe("An error occurred: ");
+                logger.severe(e.toString());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("An error occurred: ");
+            logger.severe(e.toString());
         }
     }
 
@@ -85,7 +92,8 @@ public class Library {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("An error occurred:");
+            logger.severe(e.toString());
         }
     }
 
