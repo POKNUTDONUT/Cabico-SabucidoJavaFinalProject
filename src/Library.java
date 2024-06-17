@@ -3,8 +3,8 @@ import java.util.*;
 import javax.swing.*;
 
 public class Library {
-    private List<Book> books;
-    private List<Book> borrowedBooks;
+    private final List<Book> books;
+    private final List<Book> borrowedBooks;
     private static final String BOOKS_FILE = "books.txt";
 
     public Library() {
@@ -13,9 +13,6 @@ public class Library {
         loadBooks();
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
 
     public void addBook(Book book) {
         books.add(book);
@@ -59,13 +56,6 @@ public class Library {
         JOptionPane.showMessageDialog(null, "Book not found in borrowed list");
     }
 
-    public String getBorrowedBooksInfo() {
-        StringBuilder sb = new StringBuilder();
-        for (Book book : borrowedBooks) {
-            sb.append(book.toString()).append("\n");
-        }
-        return sb.toString();
-    }
 
     private void loadBooks() {
         try (BufferedReader reader = new BufferedReader(new FileReader(BOOKS_FILE))) {

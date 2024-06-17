@@ -4,5 +4,5 @@ GreatDefender,Maldini
 GreatDefender,Carlos
 GreatWinger,Ronaldo
 GreatWinger,Messi
-GreatStriker,Haaland
 ORANGUTAN,Monkey
+GreatStriker,Haaland

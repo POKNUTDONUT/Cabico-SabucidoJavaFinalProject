@@ -2,13 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class Admin {
-    private Library library;
-    private static final String ADMIN_PASSWORD = "666"; // Set your desired admin password here
-    private Consumer<Library> mainMenuCallback; // Reference to the main menu method
+    private final Library library;
+    private static final String ADMIN_PASSWORD = "password"; // Set your desired admin password here
+    private final Consumer<Library> mainMenuCallback; // Reference to the main menu method
 
     public Admin(Library library, Consumer<Library> mainMenuCallback) {
         this.library = library;
@@ -58,26 +57,20 @@ public class Admin {
 
         final boolean[] isLoggedIn = {false};
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String password = new String(passwordField.getPassword());
-                if (ADMIN_PASSWORD.equals(password)) {
-                    isLoggedIn[0] = true;
-                    loginDialog.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(loginDialog, "Incorrect password. Please try again.");
-                    passwordField.setText("");
-                }
+        loginButton.addActionListener(e -> {
+            String password = new String(passwordField.getPassword());
+            if (ADMIN_PASSWORD.equals(password)) {
+                isLoggedIn[0] = true;
+                loginDialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(loginDialog, "Incorrect password. Please try again.");
+                passwordField.setText("");
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginDialog.dispose();
-                mainMenuCallback.accept(library); // Call the main menu method
-            }
+        cancelButton.addActionListener(e -> {
+            loginDialog.dispose();
+            mainMenuCallback.accept(library); // Call the main menu method
         });
 
         loginDialog.add(loginPanel);
@@ -102,15 +95,7 @@ public class Admin {
 
         // Load and scale the image
         ImageIcon originalIcon = new ImageIcon("images/admin.png");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-        JLabel logoLabel = new JLabel(scaledIcon);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        panel.add(logoLabel, gbc);
+        Main.setImage(panel, gbc, originalIcon);
 
         JLabel welcomeLabel = new JLabel("Admin Menu");
         welcomeLabel.setFont(new Font("Consolas", Font.BOLD, 24));
@@ -121,21 +106,11 @@ public class Admin {
 
         JButton addBookButton = new JButton("Add Book");
         addBookButton.setPreferredSize(new Dimension(150, 50));
-        addBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addBook();
-            }
-        });
+        addBookButton.addActionListener(e -> addBook());
 
         JButton removeBookButton = new JButton("Remove Book");
         removeBookButton.setPreferredSize(new Dimension(150, 50));
-        removeBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removeBook();
-            }
-        });
+        removeBookButton.addActionListener(e -> removeBook());
 
         JButton viewBorrowedBooksButton = new JButton("View Borrowed Books");
         viewBorrowedBooksButton.setPreferredSize(new Dimension(150, 50));

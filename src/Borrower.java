@@ -24,15 +24,7 @@ public class Borrower {
 
         // Load and scale the image
         ImageIcon originalIcon = new ImageIcon("images/nerd.png");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-        JLabel logoLabel = new JLabel(scaledIcon);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        panel.add(logoLabel, gbc);
+        Main.setImage(panel, gbc, originalIcon);
 
         JLabel welcomeLabel = new JLabel("Borrower Menu");
         welcomeLabel.setFont(new Font("Consolas", Font.BOLD, 24));

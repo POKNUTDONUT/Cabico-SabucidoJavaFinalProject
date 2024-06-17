@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +9,7 @@ public class Main {
     }
 
     public static void mainMenu(Library library) {
+
         JDialog dialog = new JDialog();
         dialog.setTitle("Library Management System");
 
@@ -22,15 +22,7 @@ public class Main {
 
         // Load and scale the image
         ImageIcon originalIcon = new ImageIcon("images/book.jpeg");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-        JLabel logoLabel = new JLabel(scaledIcon);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        panel.add(logoLabel, gbc);
+        setImage(panel, gbc, originalIcon);
 
         JLabel welcomeLabel = new JLabel("Welcome to Library Manager");
         welcomeLabel.setFont(new Font("Consolas", Font.BOLD, 24));
@@ -41,23 +33,17 @@ public class Main {
 
         JButton adminButton = new JButton("Admin");
         adminButton.setPreferredSize(new Dimension(150, 50));
-        adminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-                new Admin(library, Main::mainMenu); // Pass reference to mainMenu method
-            }
+        adminButton.addActionListener(e -> {
+            dialog.dispose();
+            new Admin(library, Main::mainMenu); // Pass reference to mainMenu method
         });
 
         JButton borrowerButton = new JButton("Borrower");
         borrowerButton.setPreferredSize(new Dimension(150, 50));
-        borrowerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-                new Borrower(library);
-                mainMenu(library); // Return to main menu after Borrower operations
-            }
+        borrowerButton.addActionListener(e -> {
+            dialog.dispose();
+            new Borrower(library);
+            mainMenu(library); // Return to main menu after Borrower operations
         });
 
         gbc.gridx = 0;
@@ -76,16 +62,30 @@ public class Main {
         dialog.setModal(true);
         dialog.setVisible(true);
     }
+
+    static void setImage(BackgroundPanel panel, GridBagConstraints gbc, ImageIcon originalIcon) {
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+        JLabel logoLabel = new JLabel(scaledIcon);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(logoLabel, gbc);
+    }
 }
 
 class BackgroundPanel extends JPanel {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     private Image backgroundImage;
 
     public BackgroundPanel(String filePath) {
         try {
             backgroundImage = new ImageIcon(filePath).getImage();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.severe("An error occurred:");
+            logger.severe(e.toString());
         }
     }
 
