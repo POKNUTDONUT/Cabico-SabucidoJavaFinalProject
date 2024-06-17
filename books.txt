@@ -1,0 +1,8 @@
+HarryPotter,JkRowling
+EURO2024,Portugal
+GreatDefender,Maldini
+GreatDefender,Carlos
+GreatWinger,Ronaldo
+GreatWinger,Messi
+GreatStriker,Haaland
+ORANGUTAN,Monkey
