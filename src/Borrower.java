@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Borrower {
-    private Library library;
+    private final Library library;
 
     public Borrower(Library library) {
         this.library = library;
@@ -36,39 +34,19 @@ public class Borrower {
 
         JButton borrowBookButton = new JButton("Borrow Book");
         borrowBookButton.setPreferredSize(new Dimension(150, 50));
-        borrowBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                borrowBook();
-            }
-        });
+        borrowBookButton.addActionListener(e -> borrowBook());
 
         JButton returnBookButton = new JButton("Return Book");
         returnBookButton.setPreferredSize(new Dimension(150, 50));
-        returnBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                returnBook();
-            }
-        });
+        returnBookButton.addActionListener(e -> returnBook());
 
         JButton searchBookButton = new JButton("Search Book");
         searchBookButton.setPreferredSize(new Dimension(150, 50));
-        searchBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchBook();
-            }
-        });
+        searchBookButton.addActionListener(e -> searchBook());
 
         JButton backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(150, 50));
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
+        backButton.addActionListener(e -> dialog.dispose());
 
         Admin.setButtons(panel, gbc, borrowBookButton, returnBookButton, searchBookButton, backButton);
 
@@ -117,22 +95,3 @@ public class Borrower {
     }
 }
 
-class BackgroundPanels extends JPanel {
-    private Image backgroundImage;
-
-    public BackgroundPanels(String filePath) {
-        try {
-            backgroundImage = new ImageIcon(filePath).getImage();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
-}

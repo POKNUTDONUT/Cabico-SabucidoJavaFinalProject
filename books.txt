@@ -2,7 +2,6 @@ HarryPotter,JkRowling
 EURO2024,Portugal
 GreatDefender,Maldini
 GreatDefender,Carlos
-GreatWinger,Ronaldo
 GreatWinger,Messi
-ORANGUTAN,Monkey
 GreatStriker,Haaland
+GreatWinger,Ronaldo
